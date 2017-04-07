@@ -18,7 +18,8 @@ describe SyncEntriesUsingBankCrawler do
     [
       BankEntry.new(Date.new(2017, 3, 3), "pago en línea", 25000, :deposit),
       BankEntry.new(Date.new(2017, 3, 4), "pago en línea 2", 25000, :deposit),
-      BankEntry.new(Date.new(2017, 3, 5), "pago en línea 3", 25000, :deposit)
+      BankEntry.new(Date.new(2017, 3, 5), "pago en línea 3", 25000, :deposit),
+      BankEntry.new(Date.new(2017, 3, 5), "pago en línea 4", 25000, :expense)
     ]
   }
 
@@ -32,14 +33,15 @@ describe SyncEntriesUsingBankCrawler do
     allow(bank_entries[0]).to receive(:signature).and_return(12)
     allow(bank_entries[1]).to receive(:signature).and_return(10)
     allow(bank_entries[2]).to receive(:signature).and_return(13)
-    allow(GetBancoDeChileCuentaCorrienteEntries).to receive(:for).and_return(bank_entries)
+    allow(bank_entries[3]).to receive(:signature).and_return(20)
+    allow(BancoDeChile::GetCuentaCorrienteEntries).to receive(:for).and_return(bank_entries)
   end
 
   context "#perform" do
     it "create only new entries" do
-      perform(product: "VISA CLP", get_bank_crawler_command: GetBancoDeChileCuentaCorrienteEntries, payload: payload)
+      perform(product: "VISA CLP", get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
 
-      expect(Entry.count).to eq(5)
+      expect(Entry.count).to eq(6)
       expect(Entry.where(signature: 12).count).to eq(1)
       expect(Entry.where(signature: 13).count).to eq(1)
       expect(Entry.where(signature: 10).count).to eq(2)
@@ -49,15 +51,18 @@ describe SyncEntriesUsingBankCrawler do
     end
 
     it "create entries with correct data" do
-      perform(product: "VISA CLP", get_bank_crawler_command: GetBancoDeChileCuentaCorrienteEntries, payload: payload)
+      perform(product: "VISA CLP", get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
 
       bank_entry = bank_entries[2]
+      bank_entry_expense = bank_entries[3]
       entry = Entry.where(signature: 13).first
+      entry_expense = Entry.where(signature: 20).first
 
       expect(entry.description).to eq(bank_entry.description)
       expect(entry.amount).to eq(bank_entry.amount)
       expect(entry.date).to eq(bank_entry.date)
       expect(entry.product).to eq("VISA CLP")
+      expect(entry_expense.amount).to eq(bank_entry_expense.amount * -1)
     end
   end
 end
