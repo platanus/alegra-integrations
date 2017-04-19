@@ -17,6 +17,7 @@ ActiveAdmin.register Entry do
     column :egreso do |entry|
       number_with_delimiter(entry.amount.to_i, delimiter: ".") if entry.amount&.negative?
     end
+    tag_column :alegra_status
     column :signature
     actions
   end
