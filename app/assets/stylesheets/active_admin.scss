@@ -23,3 +23,14 @@ $panelHeaderBck: #002744;
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+$neutral-color: #FF9900;
+$alert-color: #FF0000;
+$good-color: #08A510;
+
+.status_tag {
+  &.new { background: $neutral-color; }
+  &.discared { background: $alert-color; }
+  &.synced { background: $good-color; }
+}
+

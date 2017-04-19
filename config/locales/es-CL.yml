@@ -1,2 +1,5 @@
 es-CL:
-  hello: "Hola mundo"
+  active_admin:
+    batch_actions:
+      labels:
+        send_to_alegra: "Enviar a Alegra"

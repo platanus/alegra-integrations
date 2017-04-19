@@ -1,6 +1,7 @@
 class SendEntryToAlegra < PowerTypes::Command.new(:entry)
   def perform
     send
+    mark_as_synced
   end
 
   private
@@ -8,6 +9,10 @@ class SendEntryToAlegra < PowerTypes::Command.new(:entry)
   def send
     alegra_api_service = AlegraApiService.new
     alegra_api_service.post('payments/', alegra_payload)
+  end
+
+  def mark_as_synced
+    @entry.update(alegra_status: :synced)
   end
 
   def alegra_payload
