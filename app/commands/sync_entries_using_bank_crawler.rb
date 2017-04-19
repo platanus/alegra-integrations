@@ -1,4 +1,7 @@
-class SyncEntriesUsingBankCrawler < PowerTypes::Command.new(:product, :get_bank_crawler_command, :payload)
+class SyncEntriesUsingBankCrawler < PowerTypes::Command.new(:product,
+  :get_bank_crawler_command,
+  :payload)
+
   def perform
     bank_entries = @get_bank_crawler_command.for(payload: @payload)
     SignEntries.for(bank_entries: bank_entries)
@@ -13,11 +16,9 @@ class SyncEntriesUsingBankCrawler < PowerTypes::Command.new(:product, :get_bank_
       sign = bank_entry.type == :deposit ? 1 : -1
 
       entry.update_attributes(
-        {
-          description: bank_entry.description,
-          amount: bank_entry.amount * sign,
-          date: bank_entry.date
-        }
+        description: bank_entry.description,
+        amount: bank_entry.amount * sign,
+        date: bank_entry.date
       )
     end
   end
