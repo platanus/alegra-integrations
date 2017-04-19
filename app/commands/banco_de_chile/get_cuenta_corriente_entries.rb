@@ -9,7 +9,8 @@ module BancoDeChile
         password: @payload[:password]
       )
 
-      get_cuenta_corriente_entries
+      entries = get_cuenta_corriente_entries
+      filter_bad_entries entries
     ensure
       pincers.close
     end
@@ -45,6 +46,12 @@ module BancoDeChile
         match[2].to_i,
         match[4] == "A" ? :deposit : :expense
       )
+    end
+
+    def filter_bad_entries(entries)
+      banned_descriptions = ['RETENCIONES + 1 DIA', 'RETENCIONES 1 DIA', 'SALDO CONTABLE']
+
+      entries.select { |entry| !banned_descriptions.include?(entry.description)  }
     end
   end
 end
