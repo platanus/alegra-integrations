@@ -3,3 +3,4 @@ es-CL:
     batch_actions:
       labels:
         send_to_alegra: "Enviar a Alegra"
+        discard: "Descartar"

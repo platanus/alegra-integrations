@@ -1,5 +1,6 @@
 ActiveAdmin.register Entry do
   # permit_params :list, :of, :attributes, :on, :model
+  batch_action :destroy, false
   config.sort_order = 'date_desc'
 
   batch_action :send_to_alegra do |ids|
@@ -7,6 +8,13 @@ ActiveAdmin.register Entry do
       SendEntryToAlegra.for(entry: entry)
     end
     redirect_to collection_path, alert: "Las transacciones fueron Alegradas"
+  end
+
+  batch_action :discard do |ids|
+    batch_action_collection.find(ids).each do |entry|
+      entry.update(alegra_status: :discared)
+    end
+    redirect_to collection_path, alert: "Las transacciones fueron Descartadas"
   end
 
   index do
