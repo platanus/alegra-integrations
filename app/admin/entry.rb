@@ -35,6 +35,5 @@ ActiveAdmin.register Entry do
     end
     tag_column :alegra_status
     column :signature
-    actions
   end
 end
