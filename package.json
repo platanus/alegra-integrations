@@ -1,0 +1,11 @@
+{
+  "name": "alegra-integrations",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/platanus/alegra-integrations.git",
+  "author": "Jaime Bunzli <jpbunzli@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "phantomjs": "^2.1.7"
+  }
+}

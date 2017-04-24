@@ -25,3 +25,4 @@
 .env.local
 .env
 /public/system/*
+/node_modules/*
