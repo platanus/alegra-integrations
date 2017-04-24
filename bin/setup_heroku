@@ -2,19 +2,19 @@
 
 # Setup heroku application remotes
 if heroku auth:whoami &> /dev/null; then
-  if heroku apps:info --app pl-alegra-integrations-staging &> /dev/null; then
-    git remote add staging git@heroku.com:pl-alegra-integrations-staging.git || true
+  if heroku apps:info --app pl-alegra-staging &> /dev/null; then
+    git remote add staging git@heroku.com:pl-alegra-staging.git || true
     git config heroku.remote staging
-    echo 'You are a collaborator on the "pl-alegra-integrations-staging" Heroku app'
+    echo 'You are a collaborator on the "pl-alegra-staging" Heroku app'
   else
-    echo 'Ask for access to the "pl-alegra-integrations-staging" Heroku app'
+    echo 'Ask for access to the "pl-alegra-staging" Heroku app'
   fi
 
-  if heroku apps:info --app pl-alegra-integrations-production &> /dev/null; then
-    git remote add production git@heroku.com:pl-alegra-integrations-production.git || true
-    echo 'You are a collaborator on the "pl-alegra-integrations-production" Heroku app'
+  if heroku apps:info --app pl-alegra-production &> /dev/null; then
+    git remote add production git@heroku.com:pl-alegra-production.git || true
+    echo 'You are a collaborator on the "pl-alegra-production" Heroku app'
   else
-    echo 'Ask for access to the "pl-alegra-integrations-production" Heroku app'
+    echo 'Ask for access to the "pl-alegra-production" Heroku app'
   fi
 else
   echo 'You need to login to heroku. Run "heroku login"'
