@@ -11,5 +11,9 @@ namespace :crawlers do
     SyncEntriesUsingBankCrawler.for(product: 'cuenta corriente',
                                     get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries,
                                     payload: payload)
+
+    SyncEntriesUsingBankCrawler.for(product: 'tarjeta de crédito usd',
+                                    get_bank_crawler_command: BancoDeChile::GetCreditCardEntries,
+                                    payload: payload)
   end
 end
