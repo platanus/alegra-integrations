@@ -14,7 +14,7 @@ module BancoDeChile
     def login
       pincers.goto 'https://ww3.bancochile.cl/wps/wcm/connect/bch-empresas/bancodechile/empresas/'
 
-      CrawlerUtils.click_on_link_with_text(@pincers, 'div.login', "Banconexión Empresas")
+      CrawlerUtils.click_on_link_with_text(@pincers, 'div.contCajaBuscarLogin', "Banconexión Empresas")
 
       fill_rut_inputs('rutemp1', 'dvemp1', @company_rut)
       fill_rut_inputs('rut1', 'verificador1', @user_rut)
