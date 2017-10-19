@@ -28,10 +28,10 @@ ActiveAdmin.register Entry do
     end
     column :description
     column :ingreso do |entry|
-      number_with_delimiter(entry.amount.to_i, delimiter: ".") if entry.amount&.positive?
+      number_with_delimiter(entry.amount.to_f, delimiter: ".", precision: 2) if entry.amount&.positive?
     end
     column :egreso do |entry|
-      number_with_delimiter(entry.amount.to_i, delimiter: ".") if entry.amount&.negative?
+      number_with_delimiter(entry.amount.to_f, delimiter: ".", precision: 2) if entry.amount&.negative?
     end
     tag_column :alegra_status
     column :signature
