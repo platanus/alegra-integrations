@@ -12,7 +12,6 @@ end
 # Table name: entries
 #
 #  id            :integer          not null, primary key
-#  product       :string
 #  date          :date
 #  description   :text
 #  amount        :decimal(10, 2)
