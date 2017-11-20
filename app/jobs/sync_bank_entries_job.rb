@@ -10,7 +10,6 @@ class SyncBankEntriesJob < ApplicationJob
   def sync_product(product)
     SyncEntriesUsingBankCrawler.for(
       product: product,
-      get_bank_crawler_command: product.crawler_command_name.constantize,
       payload: payload
     )
   end

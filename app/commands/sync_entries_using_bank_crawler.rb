@@ -1,14 +1,16 @@
-class SyncEntriesUsingBankCrawler < PowerTypes::Command.new(:product,
-  :get_bank_crawler_command,
-  :payload)
+class SyncEntriesUsingBankCrawler < PowerTypes::Command.new(:product, :payload)
 
   def perform
-    bank_entries = @get_bank_crawler_command.for(payload: @payload)
+    bank_entries = crawler_command.for(payload: @payload)
     SignEntries.for(bank_entries: bank_entries)
     create_new_entries(bank_entries)
   end
 
   private
+
+  def crawler_command
+    @product.crawler_command_name.constantize
+  end
 
   def create_new_entries(bank_entries)
     bank_entries.each do |bank_entry|

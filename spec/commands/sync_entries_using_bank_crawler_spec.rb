@@ -41,7 +41,7 @@ describe SyncEntriesUsingBankCrawler do
 
   context "#perform" do
     it "create only new entries" do
-      perform(product: product, get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
+      perform(product: product, payload: payload)
 
       expect(Entry.count).to eq(6)
       expect(Entry.where(signature: 12).count).to eq(1)
@@ -53,7 +53,7 @@ describe SyncEntriesUsingBankCrawler do
     end
 
     it "create entries with correct data" do
-      perform(product: product, get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
+      perform(product: product, payload: payload)
 
       bank_entry = bank_entries[2]
       bank_entry_expense = bank_entries[3]
