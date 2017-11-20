@@ -5,5 +5,5 @@ production:
   - crawlers
 :schedule:
    sync_bank_entries:
-     cron: '0 * * * * *'  # Runs once per hour
+     cron: '0 0 * * * *'  # Runs once per hour
      class: SyncBankEntriesJob
