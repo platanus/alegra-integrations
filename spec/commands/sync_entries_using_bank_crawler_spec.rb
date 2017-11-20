@@ -5,6 +5,8 @@ describe SyncEntriesUsingBankCrawler do
     described_class.for(*_args)
   end
 
+  let(:product) { create(:product, crawler_command_name: "BancoDeChile::GetCuentaCorrienteEntries") }
+
   let(:payload) {
     {
       user_rut: "123",
@@ -24,9 +26,9 @@ describe SyncEntriesUsingBankCrawler do
   }
 
   before do
-    create(:entry, product: "VISA CLP", signature: 12)
-    create(:entry, product: "VISA CLP", signature: 14)
-    create(:entry, product: "VISA USD", signature: 10)
+    create(:entry, product: product, signature: 12)
+    create(:entry, product: product, signature: 14)
+    create(:entry, product: create(:product), signature: 10)
   end
 
   before do
@@ -39,7 +41,7 @@ describe SyncEntriesUsingBankCrawler do
 
   context "#perform" do
     it "create only new entries" do
-      perform(product: "VISA CLP", get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
+      perform(product: product, get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
 
       expect(Entry.count).to eq(6)
       expect(Entry.where(signature: 12).count).to eq(1)
@@ -51,7 +53,7 @@ describe SyncEntriesUsingBankCrawler do
     end
 
     it "create entries with correct data" do
-      perform(product: "VISA CLP", get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
+      perform(product: product, get_bank_crawler_command: BancoDeChile::GetCuentaCorrienteEntries, payload: payload)
 
       bank_entry = bank_entries[2]
       bank_entry_expense = bank_entries[3]
@@ -61,7 +63,7 @@ describe SyncEntriesUsingBankCrawler do
       expect(entry.description).to eq(bank_entry.description)
       expect(entry.amount).to eq(bank_entry.amount)
       expect(entry.date).to eq(bank_entry.date)
-      expect(entry.product).to eq("VISA CLP")
+      expect(entry.product.name).to eq(product.name)
       expect(entry_expense.amount).to eq(bank_entry_expense.amount * -1)
     end
   end
