@@ -2,8 +2,8 @@ production:
   :concurrency: 5
 :queues:
   - default
+  - crawlers
 :schedule:
-  #  an_scheduled_task:
-  #    cron: '0 * * * * *'  # Runs once per minute
-  #    class: ExampleJob
-  #    args: ['a', 'b']
+   sync_bank_entries:
+     cron: '0 * * * * *'  # Runs once per hour
+     class: SyncBankEntriesJob
