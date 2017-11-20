@@ -17,7 +17,7 @@ module AlegraIntegrations
     config.i18n.default_locale = 'es-CL'
     config.i18n.fallbacks = [:es, :en]
 
-    config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :sidekiq
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
   end
 end

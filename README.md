@@ -73,13 +73,17 @@ You can add custom rules to this project just adding them to the `.ruby-style.ym
 
 ## Internal dependencies
 
-### Authentication
+### Scheduled Tasks
 
-We are using the great [Devise](https://github.com/plataformatec/devise) library by [PlataformaTec](http://plataformatec.com.br/)
+To schedule recurring work at particular times or dates, this project uses [Sidekiq Scheduler](https://github.com/moove-it/sidekiq-scheduler)
 
 ### Queue System
 
-For managing tasks in the background, this project uses [DelayedJob](https://github.com/collectiveidea/delayed_job)
+For managing tasks in the background, this project uses [Sidekiq](https://github.com/mperham/sidekiq)
+
+### Authentication
+
+We are using the great [Devise](https://github.com/plataformatec/devise) library by [PlataformaTec](http://plataformatec.com.br/)
 
 ### Uploads
 
@@ -88,10 +92,6 @@ For managing uploads, this project uses [Paperclip](https://github.com/thoughtbo
 ### Error Reporting
 
 To report our errors we use [Sentry](https://github.com/getsentry/raven-ruby)
-
-### Scheduled Tasks
-
-To schedule recurring work at particular times or dates, this project uses [Clockwork](https://github.com/Rykian/clockwork)
 
 ## Sending Emails
 
