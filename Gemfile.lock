@@ -98,9 +98,6 @@ GEM
     childprocess (0.6.1)
       ffi (~> 1.0, >= 1.0.11)
     climate_control (0.1.0)
-    clockwork (2.0.1)
-      activesupport
-      tzinfo
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
@@ -114,11 +111,6 @@ GEM
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
     debug_inspector (0.0.2)
-    delayed_job (4.1.2)
-      activesupport (>= 3.0, < 5.1)
-    delayed_job_active_record (4.1.1)
-      activerecord (>= 3.0, < 5.1)
-      delayed_job (>= 3.0, < 5)
     devise (4.2.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -430,9 +422,7 @@ DEPENDENCIES
   aws-sdk-rails
   better_errors
   binding_of_caller
-  clockwork
   coffee-rails (~> 4.2)
-  delayed_job_active_record
   devise
   devise-i18n
   dotenv-rails
