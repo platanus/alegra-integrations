@@ -20,9 +20,7 @@ ActiveAdmin.register Entry do
   index do
     selectable_column
     id_column
-    column :product do |entry|
-      status_tag entry.product, :ok
-    end
+    column :product
     column :date do |entry|
       entry.date&.strftime("%d/%m/%Y")
     end
