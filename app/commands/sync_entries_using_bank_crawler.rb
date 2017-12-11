@@ -14,7 +14,7 @@ class SyncEntriesUsingBankCrawler < PowerTypes::Command.new(:product, :payload)
 
   def create_new_entries(bank_entries)
     bank_entries.each do |bank_entry|
-      entry = Entry.find_or_create_by(product: @product, signature: bank_entry.signature)
+      entry = Entry.find_or_create_by(product_id: @product.id, signature: bank_entry.signature)
       sign = bank_entry.type == :deposit ? 1 : -1
 
       entry.update_attributes(
