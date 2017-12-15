@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120180910) do
+ActiveRecord::Schema.define(version: 20171215162121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,20 @@ ActiveRecord::Schema.define(version: 20171120180910) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
+  create_table "emails", force: :cascade do |t|
+    t.date     "date"
+    t.string   "sender"
+    t.string   "subject"
+    t.string   "body"
+    t.string   "alegra_status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
   create_table "entries", force: :cascade do |t|
     t.date     "date"
     t.text     "description"
@@ -78,6 +92,7 @@ ActiveRecord::Schema.define(version: 20171120180910) do
     t.string   "crawler_command_name"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "alegra_id"
   end
 
   create_table "users", force: :cascade do |t|
