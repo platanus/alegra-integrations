@@ -36,13 +36,6 @@ class SendEntryToAlegra < PowerTypes::Command.new(:entry)
   end
 
   def alegra_bank_acount_id
-    case @entry.product
-    when 'cuenta corriente'
-      2
-    when 'tarjeta de crédito usd'
-      5
-    when 'cuenta corriente usd'
-      11
-    end
+    @entry.product.alegra_id
   end
 end
