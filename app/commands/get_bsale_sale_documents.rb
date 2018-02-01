@@ -4,11 +4,21 @@ def perform (opts ={})
   docu = document.all(document.to_h)
   docu.slice(:id, :document_type)
  
-  docu = document.map do |key, x|
- 
-    if key == "document_type" do
-       @documents = 
-       @documents.save
+  @docu_arr= []
 
-end
+  doc = {"document_type" => "",
+        "bsale_id"=>"",
+        "alegra_id"=>"" }
+
+  docu.each do |key, x|
+    if key == "id"
+      doc["id"]= x
+    elsif key == "document_type" 
+       x.each do |key2, value|
+        if key2== "id"
+          doc["document_type"]=value
+        
+        end
+    @docu_arr.push doc 
+    end
 end
