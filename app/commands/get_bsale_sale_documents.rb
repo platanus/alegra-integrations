@@ -13,12 +13,18 @@ def perform (opts ={})
   docu.each do |key, x|
     if key == "id"
       doc["id"]= x
+    end 
     elsif key == "document_type" 
        x.each do |key2, value|
         if key2== "id"
           doc["document_type"]=value
-        
         end
-    @docu_arr.push doc 
+      end 
+    @docu_arr.push (doc) 
+    end
+
+  @docu_arr.each do |key,value|
+    if key == "id" 
+      @docu_arr.find_or_create_by(id : key)
     end
 end
