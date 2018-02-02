@@ -1,4 +1,7 @@
 class Document < ApplicationRecord
+  extend Enumerize
+  DOCUMENT_TYPES = [:sale, :buy]
+  enumerize :document_type, in: DOCUMENT_TYPES, default: nil, scope: true
 end
 
 # == Schema Information
