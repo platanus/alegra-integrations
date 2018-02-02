@@ -2,6 +2,7 @@ class Document < ApplicationRecord
   extend Enumerize
   DOCUMENT_TYPES = [:sale, :buy]
   enumerize :document_type, in: DOCUMENT_TYPES, default: nil, scope: true
+  serialize :bsale_info, JSON
 end
 
 # == Schema Information
@@ -14,4 +15,5 @@ end
 #  alegra_id     :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  bsale_info    :text
 #
