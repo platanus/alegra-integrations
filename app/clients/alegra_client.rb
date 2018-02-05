@@ -1,4 +1,13 @@
 class AlegraClient
+  def create_document(alegra_document)
+    alegra_api_service = AlegraApiService.new
+    response = alegra_api_service.post('invoices', alegra_document)
+    if response && response.code == 201
+      @document.update(alegra_status: :synced)
+    end
+    response
+  end
+
   def find_or_create_client(bsale_client)
     @bsale_client = bsale_client
     alegra_api_service = AlegraApiService.new
