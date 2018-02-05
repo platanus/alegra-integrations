@@ -10,6 +10,12 @@ class BsaleClient
     JSON.parse(response.body)["items"]
   end
 
+  def get_client(url)
+    http, request = config_request(url, 'get')
+    response = http.request(request)
+    JSON.parse(response.body)
+  end
+
   private
 
   def config_request(url, verb)
