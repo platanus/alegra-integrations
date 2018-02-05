@@ -5,6 +5,10 @@ class Document < ApplicationRecord
   enumerize :alegra_status, in: ALEGRA_STATUS, default: ALEGRA_STATUS.first
   enumerize :document_type, in: DOCUMENT_TYPES, default: nil, scope: true
   serialize :bsale_info, JSON
+
+  def url_client
+    bsale_info["client"]["href"] if bsale_info
+  end
 end
 
 # == Schema Information
