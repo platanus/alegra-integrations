@@ -11,6 +11,17 @@ class AlegraClient
     response.length.positive? ? response.first : create_contact
   end
 
+  def get(endpoint)
+    response = RestClient.get url(endpoint), auth_json
+    JSON.parse(response.body)
+  end
+
+  def post(endpoint, params)
+    RestClient.post url(endpoint), params.to_json, auth_json
+  rescue RestClient::ExceptionWithResponse => e
+    p e.response.body
+  end
+
   private
 
   def create_contact
