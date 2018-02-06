@@ -7,12 +7,11 @@ class AlegraClient
     response
   end
 
-  def find_or_create_client(bsale_client)
-    @bsale_client = bsale_client
-    alegra_api_service = AlegraApiService.new
-    endpoint = "contacts/?name=#{@bsale_client['firstName']} #{@bsale_client['lastName']}"
-    response = alegra_api_service.get(endpoint)
-    response.length.positive? ? response.first : create_client(alegra_client)
+  def find_or_create_contact(bsale_contact)
+    @bsale_contact = bsale_contact
+    endpoint = "contacts/?name=#{@bsale_contact['firstName']} #{@bsale_contact['lastName']}"
+    response = get(endpoint)
+    response.length.positive? ? response.first : create_contact
   end
 
   def get(endpoint)
@@ -28,17 +27,20 @@ class AlegraClient
 
   private
 
-  def create_client(alegra_client)
-    alegra_api_service = AlegraApiService.new
-    response = alegra_api_service.post('contacts', alegra_client)
+  def create_contact
+    response = post('contacts', alegra_contact)
     response.try(:code) == 201 ? JSON.parse(response.body) : response
   end
 
-  def alegra_client
+  def alegra_contact
     {
-      "name": "#{@bsale_client['firstName']} #{@bsale_client['lastName']}",
-      "email": @bsale_client["email"],
+      "name": "#{@bsale_contact['firstName']} #{@bsale_contact['lastName']}",
+      "email": @bsale_contact["email"],
       "type": ["client"],
+      "phonePrimary": @bsale_contact["phone"]
+    }
+  end
+
   def url(endpoint)
     "https://app.alegra.com/api/v1/#{endpoint}"
   end
