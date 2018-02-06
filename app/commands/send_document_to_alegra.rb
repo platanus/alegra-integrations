@@ -1,7 +1,7 @@
 class SendDocumentToAlegra < PowerTypes::Command.new(:document)
   def perform
-    @alegra_client = AlegraClient.new.find_or_create_client(bsale_client)
-    @alegra_client && @alegra_client["id"] ? create_document : nil
+    @alegra_contact = AlegraClient.new.find_or_create_contact(bsale_contact) if bsale_contact
+    @alegra_contact && @alegra_contact["id"] ? create_document : nil
   end
 
   private
@@ -22,7 +22,7 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
     {
       "date": date_formated(emission_date),
       "dueDate": date_formated(due_date),
-      "client": @alegra_client["id"].to_i,
+      "client": @alegra_contact["id"].to_i,
       "items": [
         {
           "id": 1,
@@ -39,7 +39,8 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
     "#{date.year}-#{month}-#{day}"
   end
 
-  def bsale_client
-    @bsale_client ||= BsaleClient.new.get_client(@document.url_client)
+  def bsale_contact
+    url_contact = @document.url_contact_bsale
+    @bsale_contact ||= BsaleClient.new.get_bsale_object(url_contact) if url_contact
   end
 end
