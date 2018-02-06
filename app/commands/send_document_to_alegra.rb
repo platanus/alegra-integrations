@@ -7,8 +7,7 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
   private
 
   def create_document
-    alegra_api_service = AlegraApiService.new
-    response = JSON.parse(alegra_api_service.post('invoices', alegra_document))
+    response = JSON.parse(AlegraClient.new.post('invoices', alegra_document))
     if response["id"]
       @document.update_columns(alegra_id: response["id"].to_i, alegra_status: :synced)
     else
