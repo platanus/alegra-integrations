@@ -7,3 +7,7 @@ production:
    sync_bank_entries:
      cron: '0 0 * * * *'  # Runs once per hour
      class: SyncBankEntriesJob
+   get_bsale_documents:
+     every: '30m'
+     class: GetBsaleSaleDocumentsJob
+
