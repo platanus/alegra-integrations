@@ -4,10 +4,9 @@ class BsaleClient
   require 'json'
 
   def get_documents
-    url = 'https://api.bsale.cl/v1/documents.json'
-    http, request = config_request(url, 'get')
-    response = http.request(request)
-    JSON.parse(response.body)["items"]
+    exempt_invoices = make_document_request(5)
+    electronic_invoices = make_document_request(15)
+    exempt_invoices + electronic_invoices
   end
 
   def get_bsale_object(url)
@@ -28,5 +27,12 @@ class BsaleClient
     request['Content-Type'] = 'application/json'
     request['access_token'] = ENV['BSALE_ACCESS_TOKEN']
     [http, request]
+  end
+
+  def make_document_request(document_type_id)
+    url = "https://api.bsale.cl/v1/documents.json?documenttypeid=#{document_type_id}"
+    http, request = config_request(url, 'get')
+    response = http.request(request)
+    JSON.parse(response.body)["items"]
   end
 end
