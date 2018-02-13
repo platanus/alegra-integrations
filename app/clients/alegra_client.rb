@@ -6,9 +6,11 @@ class AlegraClient
 
   def find_or_create_contact(bsale_contact)
     @bsale_contact = bsale_contact
-    endpoint = "contacts/?name=#{@bsale_contact['firstName']} #{@bsale_contact['lastName']}"
-    response = get(endpoint)
-    response.length.positive? ? response.first : create_contact
+    response = get("contacts")
+    contact = response.select do |obj|
+      obj["name"] == "#{@bsale_contact['firstName']} #{@bsale_contact['lastName']}"
+    end
+    contact.length.positive? ? contact.first : create_contact
   end
 
   def get(endpoint)
