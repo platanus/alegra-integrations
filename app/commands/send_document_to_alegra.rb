@@ -1,7 +1,7 @@
 class SendDocumentToAlegra < PowerTypes::Command.new(:document)
   def perform
-    @alegra_contact = alegra_client.find_or_create_contact(bsale_contact) if bsale_contact
-    @alegra_contact && @alegra_contact["id"] ? create_document : nil
+    @alegra_contact = alegra_client.get_contact_by_rut(bsale_contact["code"])
+    create_document if @alegra_contact
   end
 
   private
