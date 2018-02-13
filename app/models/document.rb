@@ -6,6 +6,10 @@ class Document < ApplicationRecord
   enumerize :document_type, in: DOCUMENT_TYPES, default: nil, scope: true
   serialize :bsale_info, JSON
 
+  def legal_id
+    bsale_info["number"]
+  end
+
   def url_contact_bsale
     bsale_info["client"]["href"] if bsale_info && bsale_info["client"]
   end

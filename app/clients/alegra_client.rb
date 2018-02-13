@@ -4,11 +4,18 @@ class AlegraClient
     JSON.parse(response)
   end
 
-  def find_or_create_contact(bsale_contact)
-    @bsale_contact = bsale_contact
-    endpoint = "contacts/?name=#{@bsale_contact['firstName']} #{@bsale_contact['lastName']}"
-    response = get(endpoint)
-    response.length.positive? ? response.first : create_contact
+  def create_contact(alegra_contact)
+    response = post('contacts', alegra_contact)
+    JSON.parse(response)
+  end
+
+  def get_contact_by_rut(rut)
+    rut_cleaned = rut.gsub(/[^\d\-]/, '')
+
+    contacts = get("contacts/?identification=#{rut}")
+    contacts = get("contacts/?identification=#{rut_cleaned}") if contacts.empty?
+
+    contacts.first
   end
 
   def get(endpoint)
@@ -23,20 +30,6 @@ class AlegraClient
   end
 
   private
-
-  def create_contact
-    response = post('contacts', alegra_contact)
-    response.try(:code) == 201 ? JSON.parse(response.body) : response
-  end
-
-  def alegra_contact
-    {
-      "name": "#{@bsale_contact['firstName']} #{@bsale_contact['lastName']}",
-      "email": @bsale_contact["email"],
-      "type": ["client"],
-      "phonePrimary": @bsale_contact["phone"]
-    }
-  end
 
   def url(endpoint)
     "https://app.alegra.com/api/v1/#{endpoint}"
