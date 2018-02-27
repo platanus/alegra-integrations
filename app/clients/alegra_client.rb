@@ -4,6 +4,20 @@ class AlegraClient
     JSON.parse(response)
   end
 
+  # document_hash attributes:
+  #
+  # id_client:      "Client_Name",
+  # observations:   "Observations",
+  # bill_number:    "Bill_Numbre_As_String",
+  # bill_date:      "dd/mm/aaaa" or nil for today,
+  # bill_due_date:  "dd/mm/aaaa" or nil for today,
+  # id_category:    "One_Existing_Category",
+  # price:          "Price_As_String"
+  #
+  def create_third_party_document(document_hash)
+    CreateThirdPartyDocument.for(document_hash: document_hash)
+  end
+
   def create_contact(alegra_contact)
     response = post('contacts', alegra_contact)
     JSON.parse(response)
