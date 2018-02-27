@@ -14,7 +14,7 @@ describe DocumentObserver do
 
   describe "#send_document_to_alegra" do
     it "call send_document_to_alegra after_create" do
-      expect(SendDocumentToAlegra).to receive(:for).with(document: object).once
+      expect(SendDocumentToAlegraJob).to receive(:perform_later).with(document: object).once
       trigger(:after, :create)
     end
   end
