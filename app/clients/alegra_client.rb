@@ -1,7 +1,41 @@
 class AlegraClient
-  def create_document(alegra_document)
-    response = post('invoices', alegra_document)
+  # document_hash = {
+  #   id_client: "Client_Name",
+  #   observations: "Observations",
+  #   bill_number: "Bill_Numbre_As_String",
+  #   bill_date: "dd/mm/aaaa" or nil for today,
+  #   bill_due_date: "dd/mm/aaaa" or nil for today,
+  #   id_category: "One_Existing_Category",
+  #   price: "Price_As_String"
+  # }
+  def create_document(document_hash)
+    response = post('invoices', alegra_document(document_hash))
     JSON.parse(response)
+  end
+
+  def alegra_document(document_hash)
+    {
+      "date": date_formated_sale(document_hash[:bill_date]),
+      "dueDate": date_formated_sale(document_hash[:bill_due_date]),
+      "client": document_hash[:id_client].to_i, #REVISAR: ES POR NOMBRE
+      "numberTemplate": { "id": 1, "number": document_hash[:bill_number] },
+      "items": [
+        {
+          "id": 1,
+          "price": document_hash[:price].to_i,
+          "quantity": 1
+        }
+      ]
+    }
+  end
+
+  def date_formated_sale(date)
+    date_arr = date.split("/")
+    "#{date_arr[2]}-#{date_arr[1]}-#{date_arr[0]}"
+  end
+
+  def create_third_party_document(document_hash)
+    CreateThirdPartyDocument.for(document_hash: document_hash)
   end
 
   def create_contact(alegra_contact)
