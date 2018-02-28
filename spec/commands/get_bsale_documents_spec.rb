@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe GetBsaleSaleDocuments do
+describe GetBsaleDocuments do
   def perform(*_args)
     described_class.for(*_args)
   end
