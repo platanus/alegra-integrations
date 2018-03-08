@@ -27,4 +27,5 @@ end
 #  updated_at    :datetime         not null
 #  bsale_info    :text
 #  alegra_status :string
+#  rut           :string
 #
