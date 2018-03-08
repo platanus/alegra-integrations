@@ -9,10 +9,8 @@ describe SendDocumentToAlegra do
     before do
       allow_any_instance_of(AlegraClient).to receive(:get_contact_by_rut)
         .and_return("id" => 4)
-      allow_any_instance_of(described_class).to receive(:bsale_contact)
-        .and_return("id" => 4)
-      allow_any_instance_of(Document).to receive(:legal_id)
-        .and_return(2)
+      # allow_any_instance_of(Document).to receive(:legal_id)
+      #   .and_return(2)
     end
 
     context "create sale document" do
