@@ -5,5 +5,6 @@ FactoryGirl.define do
     alegra_id 1
     rut "76.191.257-7"
     date Date.new(1982, 3, 3)
+    amount 35000
   end
 end

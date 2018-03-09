@@ -29,4 +29,5 @@ end
 #  alegra_status :string
 #  rut           :string
 #  date          :date
+#  amount        :decimal(10, 2)
 #
