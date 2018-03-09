@@ -9,5 +9,5 @@ production:
      class: SyncBankEntriesJob
    get_bsale_documents:
      every: '30m'
-     class: GetBsaleSaleDocumentsJob
+     class: GetBsaleDocumentsJob
 
