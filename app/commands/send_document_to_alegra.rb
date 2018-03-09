@@ -7,30 +7,24 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
   private
 
   def create_document
-    response = alegra_client.create_document(alegra_document)
+    response = alegra_client.create_document(alegra_document_hash)
+
     if response["id"]
       @document.update_columns(alegra_id: response["id"].to_i, alegra_status: :synced)
     else
       @document.update_columns(alegra_status: :error)
     end
+
     response
   end
 
-  def alegra_document
-    emission_date = Time.at(@document.bsale_info["emissionDate"]).to_date
-    due_date = Time.at(@document.bsale_info["expirationDate"]).to_date
+  def alegra_document_hash
     {
-      "date": date_formated(emission_date),
-      "dueDate": date_formated(due_date),
-      "client": @alegra_contact["id"].to_i,
-      "numberTemplate": { "id": 1, "number": @document.legal_id },
-      "items": [
-        {
-          "id": 1,
-          "price": @document.bsale_info["totalAmount"],
-          "quantity": 1
-        }
-      ]
+      id_client: @alegra_contact["id"].to_i,
+      bill_number: @document.legal_id,
+      bill_date: Time.at(@document.bsale_info["emissionDate"]).to_date,
+      bill_due_date: Time.at(@document.bsale_info["expirationDate"]).to_date,
+      price: @document.bsale_info["totalAmount"].to_s
     }
   end
 

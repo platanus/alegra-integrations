@@ -1,6 +1,14 @@
 class AlegraClient
-  def create_document(alegra_document)
-    response = post('invoices', alegra_document)
+  # document_hash attributes:
+  #
+  # id_client:      "Client_Name",
+  # bill_number:    "Bill_Numbre_As_String",
+  # bill_date:      "dd/mm/aaaa" or nil for today,
+  # bill_due_date:  "dd/mm/aaaa" or nil for today,
+  # price:          20000
+  #
+  def create_document(document_hash)
+    response = post('invoices', alegra_document_payload(document_hash))
     JSON.parse(response)
   end
 
@@ -54,6 +62,22 @@ class AlegraClient
 
     {
       Authorization: "Basic " + Base64.encode64(text_to_encode)
+    }
+  end
+
+  def alegra_document_payload(document_hash)
+    {
+      "date": document_hash[:bill_date].strftime("%F"),
+      "dueDate": document_hash[:bill_due_date].strftime("%F"),
+      "client": document_hash[:id_client].to_i,
+      "numberTemplate": { "id": 1, "number": document_hash[:bill_number] },
+      "items": [
+        {
+          "id": 1,
+          "price": document_hash[:price],
+          "quantity": 1
+        }
+      ]
     }
   end
 end
