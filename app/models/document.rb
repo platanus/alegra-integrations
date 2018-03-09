@@ -28,4 +28,5 @@ end
 #  bsale_info    :text
 #  alegra_status :string
 #  rut           :string
+#  date          :date
 #
