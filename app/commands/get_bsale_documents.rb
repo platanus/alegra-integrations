@@ -35,7 +35,7 @@ class GetBsaleDocuments < PowerTypes::Command.new
   end
 
   def get_rut(bsale_document)
-    return bsale_document[:clientCode] if bsale_document[:clientCode]
-    BsaleClient.new.get_bsale_object(bsale_document[:client][:href])[:code]
+    return bsale_document["clientCode"] if bsale_document["clientCode"]
+    BsaleClient.new.get_bsale_object(bsale_document["client"]["href"])["code"]
   end
 end
