@@ -6,15 +6,15 @@ describe GetBsaleDocuments do
   end
 
   let(:sale_documents) do
-    [{ "id": 369, "client": { "href": "http://client_url" } },
-     { "id": 370, "client": { "href": "http://client_url" } },
-     { "id": 371, "client": { "href": "http://client_url" } }]
+    [{ "id" => 369, "client" => { "href" => "http://client_url" } },
+     { "id" => 370, "client" => { "href" => "http://client_url" } },
+     { "id" => 371, "client" => { "href" => "http://client_url" } }]
   end
 
   let(:buy_documents) do
-    [{ "id": 469, "clientCode": "76191257-7" },
-     { "id": 470, "clientCode": "76191257-7" },
-     { "id": 471, "clientCode": "76191257-7" }]
+    [{ "id" => 469, "clientCode" => "76191257-7" },
+     { "id" => 470, "clientCode" => "76191257-7" },
+     { "id" => 471, "clientCode" => "76191257-7" }]
   end
 
   before do
@@ -23,7 +23,7 @@ describe GetBsaleDocuments do
     allow_any_instance_of(BsaleClient).to receive(:get_buy_documents)
       .and_return(buy_documents)
     allow_any_instance_of(BsaleClient).to receive(:get_bsale_object)
-      .and_return("code": "76191257-7")
+      .and_return("code" => "76191257-7")
   end
 
   describe "#perform" do
@@ -44,17 +44,17 @@ describe GetBsaleDocuments do
         create(:document, bsale_id: 369,
                           document_type: "sale",
                           created_at: Time.now - 5.days,
-                          bsale_info: { "id": 369,
-                                        "client": { "href": "http://client_url" },
-                                        "info": "old info" })
+                          bsale_info: { "id" => 369,
+                                        "client" => { "href" => "http://client_url" },
+                                        "info" => "old info" })
       end
       let!(:buy_document) do
         create(:document, bsale_id: 471,
                           document_type: "buy",
                           created_at: Time.now - 5.days,
-                          bsale_info: { "id": 471,
-                                        "clientCode": "76191257-7",
-                                        "info": "old info" })
+                          bsale_info: { "id" => 471,
+                                        "clientCode" => "76191257-7",
+                                        "info" => "old info" })
       end
 
       before do

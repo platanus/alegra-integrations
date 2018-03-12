@@ -22,7 +22,7 @@ describe SendDocumentToAlegra do
                             "emissionDate" => Time.now.to_i,
                             "expirationDate" => Time.now.to_i,
                             "totalAmount" => "4000"
-                            })
+                          })
       end
 
       before do
@@ -43,7 +43,7 @@ describe SendDocumentToAlegra do
                             "emissionDate" => Time.now.to_i,
                             "expirationDate" => Time.now.to_i,
                             "totalAmount" => 4000
-                            })
+                          })
       end
 
       before do
