@@ -3,10 +3,14 @@ class BsaleClient
   require 'openssl'
   require 'json'
 
-  def get_documents
-    exempt_invoices = make_document_request(5)
-    electronic_invoices = make_document_request(15)
+  def get_sale_documents
+    exempt_invoices = make_sale_document_request(5)
+    electronic_invoices = make_sale_document_request(15)
     exempt_invoices + electronic_invoices
+  end
+
+  def get_buy_documents
+    make_buy_document_request
   end
 
   def get_bsale_object(url)
@@ -29,8 +33,15 @@ class BsaleClient
     [http, request]
   end
 
-  def make_document_request(document_type_id)
+  def make_sale_document_request(document_type_id)
     url = "https://api.bsale.cl/v1/documents.json?documenttypeid=#{document_type_id}"
+    http, request = config_request(url, 'get')
+    response = http.request(request)
+    JSON.parse(response.body)["items"]
+  end
+
+  def make_buy_document_request
+    url = "https://api.bsale.cl/v1/third_party_documents.json" # ?limit=50
     http, request = config_request(url, 'get')
     response = http.request(request)
     JSON.parse(response.body)["items"]
