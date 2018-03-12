@@ -19,7 +19,7 @@ class AlegraClient::CreateThirdPartyDocument < PowerTypes::Command.new(:document
     { "id" => id }
   end
 
-  def log_in(pincers)
+  def log_in(pincers) #cambiar a ENV
     pincers.goto "https://app2.alegra.com/"
     pincers.search("input[name=email]").set("raborn@miuandes.cl")
     pincers.search("input[name=password]").set("123456")
@@ -28,7 +28,7 @@ class AlegraClient::CreateThirdPartyDocument < PowerTypes::Command.new(:document
 
   def set_client_info(pincers)
     pincers.goto "https://app2.alegra.com/bill/add"
-    pincers.search("input[name=idClient]").set(@document_hash[:id_client])
+    pincers.search("input[name=idClient]").set(@document_hash[:client_name])
     pincers.search("textarea[name=observations]").set(@document_hash[:observations])
     pincers.search("input[name=billNumber]").set(@document_hash[:bill_number])
   end
