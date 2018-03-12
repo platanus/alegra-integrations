@@ -26,4 +26,5 @@ end
 #  rut           :string
 #  date          :date
 #  amount        :decimal(10, 2)
+#  legal_id      :string
 #

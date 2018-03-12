@@ -6,6 +6,7 @@ FactoryGirl.define do
     rut "76.191.257-7"
     date Date.new(1982, 3, 3)
     amount 35000
+    legal_id "5432"
 
     trait :sale do
       document_type :sale
