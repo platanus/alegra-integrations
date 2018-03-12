@@ -1,6 +1,6 @@
 class SendDocumentToAlegra < PowerTypes::Command.new(:document)
   def perform
-    @alegra_contact = alegra_client.get_contact_by_rut(bsale_contact["code"])
+    @alegra_contact = alegra_client.get_contact_by_rut(@document.rut)
     create_document if @alegra_contact
   end
 
@@ -22,9 +22,9 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
     {
       id_client: @alegra_contact["id"].to_i,
       bill_number: @document.legal_id,
-      bill_date: Time.at(@document.bsale_info["emissionDate"]).to_date,
-      bill_due_date: Time.at(@document.bsale_info["expirationDate"]).to_date,
-      price: @document.bsale_info["totalAmount"].to_s
+      bill_date: @document.date,
+      bill_due_date: @document.date,
+      price: @document.amount
     }
   end
 
@@ -36,10 +36,5 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
 
   def alegra_client
     @alegra_client ||= AlegraClient.new
-  end
-
-  def bsale_contact
-    url_contact = @document.url_contact_bsale
-    @bsale_contact ||= BsaleClient.new.get_bsale_object(url_contact) if url_contact
   end
 end
