@@ -25,11 +25,11 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
     emission_date = Time.at(@document.bsale_info["emissionDate"]).to_date
     due_date = get_due_date
     doc_hash = {
-      "id_client": @alegra_contact["id"],
-      "bill_number": @document.legal_id,
-      "bill_date": date_formated(emission_date),
-      "bill_due_date": date_formated(due_date),
-      "price": @document.bsale_info["totalAmount"].to_s
+      "id_client" => @alegra_contact["id"],
+      "bill_number" => @document.legal_id,
+      "bill_date" => date_formated(emission_date),
+      "bill_due_date" => date_formated(due_date),
+      "price" => @document.bsale_info["totalAmount"].to_s
     }
     if @document.document_type == "buy"  #FALTA
       doc_hash["client_name"] = @alegra_contact["client_name"]
@@ -39,7 +39,7 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
     doc_hash
   end
 
-  def get_due_date #Revisar para buy
+  def get_due_date
     if @document.document_type == "sale"
       Time.at(@document.bsale_info["expirationDate"]).to_date
     elsif @document.document_type == "buy"

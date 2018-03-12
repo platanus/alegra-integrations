@@ -28,24 +28,24 @@ class AlegraClient::CreateThirdPartyDocument < PowerTypes::Command.new(:document
 
   def set_client_info(pincers)
     pincers.goto "https://app2.alegra.com/bill/add"
-    pincers.search("input[name=idClient]").set(@document_hash[:client_name])
-    pincers.search("textarea[name=observations]").set(@document_hash[:observations])
-    pincers.search("input[name=billNumber]").set(@document_hash[:bill_number])
+    pincers.search("input[name=idClient]").set(@document_hash["client_name"])
+    pincers.search("textarea[name=observations]").set(@document_hash["observations"])
+    pincers.search("input[name=billNumber]").set(@document_hash["bill_number"])
   end
 
   def set_dates(pincers)
-    if !@document_hash[:bill_date].nil?
-      pincers.search("#billDateDatefield-inputEl").set(@document_hash[:bill_date])
+    if !@document_hash["bill_date"].nil?
+      pincers.search("#billDateDatefield-inputEl").set(@document_hash["bill_date"])
     end
-    if !@document_hash[:bill_due_date].nil?
-      pincers.search("#billDueDateDatefield-inputEl").set(@document_hash[:bill_due_date])
+    if !@document_hash["bill_due_date"].nil?
+      pincers.search("#billDueDateDatefield-inputEl").set(@document_hash["bill_due_date"])
     end
   end
 
   def set_invoiceitems_info(pincers)
-    pincers.search("input[name=idCategory]").set(@document_hash[:id_category])
-    pincers.search(tag: 'li', content: @document_hash[:id_category]).click
-    pincers.search("input[name=price]").set(@document_hash[:price])
+    pincers.search("input[name=idCategory]").set(@document_hash["id_category"])
+    pincers.search(tag: 'li', content: @document_hash["id_category"]).click
+    pincers.search("input[name=price]").set(@document_hash["price"])
   end
 
   def save(pincers)
