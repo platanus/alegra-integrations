@@ -8,8 +8,7 @@ class AlegraClient
   # price:          20000
   #
   def create_document(document_hash)
-    response = post('invoices', alegra_document_payload(document_hash))
-    JSON.parse(response)
+    post('invoices', alegra_document_payload(document_hash))
   end
 
   # document_hash attributes:
@@ -27,8 +26,7 @@ class AlegraClient
   end
 
   def create_contact(alegra_contact)
-    response = post('contacts', alegra_contact)
-    JSON.parse(response)
+    post('contacts', alegra_contact)
   end
 
   def get_contact_by_rut(rut)
@@ -42,11 +40,18 @@ class AlegraClient
 
   def get(endpoint)
     response = RestClient.get url(endpoint), auth_json
-    JSON.parse(response.body)
+    parsed_response = JSON.parse(response.body)
+
+    if parsed_response.is_a?(Array)
+      parsed_response.map(&:deep_symbolize_keys!)
+    else
+      parsed_response.deep_symbolize_keys
+    end
   end
 
   def post(endpoint, params)
-    RestClient.post url(endpoint), params.to_json, auth_json
+    response = RestClient.post url(endpoint), params.to_json, auth_json
+    JSON.parse(response).deep_symbolize_keys!
   rescue RestClient::ExceptionWithResponse => e
     p e.response.body
   end

@@ -7,20 +7,20 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
   private
 
   def create_document
-    response = alegra_client.create_document(alegra_document_hash)
+    alegra_document = alegra_client.create_document(alegra_document_hash)
 
-    if response["id"]
-      @document.update_columns(alegra_id: response["id"].to_i, alegra_status: :synced)
+    if alegra_document[:id]
+      @document.update_columns(alegra_id: alegra_document[:id], alegra_status: :synced)
     else
       @document.update_columns(alegra_status: :error)
     end
 
-    response
+    alegra_document
   end
 
   def alegra_document_hash
     {
-      id_client: @alegra_contact["id"].to_i,
+      id_client: @alegra_contact[:id].to_i,
       bill_number: @document.legal_id,
       bill_date: @document.date,
       bill_due_date: @document.date,
