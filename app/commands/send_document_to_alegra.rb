@@ -29,7 +29,7 @@ class SendDocumentToAlegra < PowerTypes::Command.new(:document)
       "bill_number" => @document.legal_id,
       "bill_date" => date_formated(emission_date),
       "bill_due_date" => date_formated(due_date),
-      "price" => @document.bsale_info["totalAmount"].to_s
+      "price" => @document.bsale_info["totalAmount"]
     }
     if @document.document_type == "buy"  #FALTA
       doc_hash["client_name"] = @alegra_contact["client_name"]
